@@ -33,11 +33,9 @@ function Board({ nrows = 4, ncols = 4, chanceLightStartsOn = 0.33 }) {
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = Array.from(
-      { length: nrows }.map((r) =>
+      { length: nrows }).map((r) =>
         Array.from(
-          { length: nrowscols }.map((c) => chanceLightStartsOn > Math.random())
-        )
-      )
+          { length: ncols }).map((c) => chanceLightStartsOn > Math.random())
     );
     // TODO: create array-of-arrays of true/false values
     return initialBoard;
@@ -61,25 +59,24 @@ function Board({ nrows = 4, ncols = 4, chanceLightStartsOn = 0.33 }) {
       };
 
       // TODO: Make a (deep) copy of the oldBoard
-      let boardCopy = oldBoard.map(r=> [...r])
+      let boardCopy = oldBoard.map((r) => [...r]);
       // TODO: in the copy, flip this cell and the cells around it
       flipCell(y, x, boardCopy);
       flipCell(y - 1, x, boardCopy);
       flipCell(y + 1, x, boardCopy);
       flipCell(y, x + 1, boardCopy);
       flipCell(y, x - 1, boardCopy);
-      
-      
+
       // TODO: return the copy
-      return boardCopy
+      return boardCopy;
     });
   }
 
   // if the game is won, just show a winning msg & render nothing else
 
   // TODO
-  if(hasWon()){
-    return <div>You Won!</div>
+  if (hasWon()) {
+    return <div>You Won!</div>;
   }
 
   // make table board
@@ -88,23 +85,25 @@ function Board({ nrows = 4, ncols = 4, chanceLightStartsOn = 0.33 }) {
 
   let tableBoard = [];
 
-  for(let y = 0; y < nrows; y++){
+  for (let y = 0; y < nrows; y++) {
     let row = [];
-    for(let x=0; x< ncols; x++){
+    for (let x = 0; x < ncols; x++) {
       let yx = `${y}-${x}`;
       row.push(
-        <Cell key={yx} isLit={board[y][x]} flipAdjCells={e => flipCellsAround(yx)} />
-
-      )
+        <Cell
+          key={yx}
+          isLit={board[y][x]}
+          flipAdjCells={(e) => flipCellsAround(yx)}
+        />
+      );
     }
-    tableBoard.push(<tr key={y}>{row}</tr>)
+    tableBoard.push(<tr key={y}>{row}</tr>);
   }
-  return(
+  return (
     <table className="Board">
-      <tbody>{tblBoard}</tbody>
+      <tbody>{tableBoard}</tbody>
     </table>
-  )
-
+  );
 }
 
 export default Board;
